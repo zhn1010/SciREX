@@ -1,17 +1,17 @@
-allennlp  #allennlp==0.9.0
-overrides #overrides==1.9
-numpy # numpy==1.16.4
-pandas # pandas==0.24.2
-scripts # scripts==2.0
-scikit_learn # scikit_learn==0.21.3
-typing # typing==3.7.4
-pandas #pandas==0.24.2
-Click # Click==7.0
-tqdm #tqdm==4.32.1
-fuzzywuzzy #fuzzywuzzy==0.17.0
-spacy #spacy==2.1.6
-p_tqdm #p_tqdm==1.2
-beautifulsoup4 #beautifulsoup4==4.8.0
-elasticsearch #elasticsearch==7.0.2
+allennlp==0.9.0 # allennlp
+overrides==1.9 # overrides
+numpy==1.16.4 # numpy
+pandas==0.24.2 # pandas
+scripts==2.0 # scripts
+scikit_learn==0.21.3 # scikit_learn
+typing==3.7.4 # typing
+pandas==0.24.2 # pandas
+Click==7.0 # Click
+tqdm==4.32.1 # tqdm
+fuzzywuzzy==0.17.0 # fuzzywuzzy
+spacy==2.1.6 # spacy
+p_tqdm==1.2 # p_tqdm
+beautifulsoup4==4.8.0 # beautifulsoup4
+elasticsearch==7.0.2 # elasticsearch
 ipdb
 python-intervals
