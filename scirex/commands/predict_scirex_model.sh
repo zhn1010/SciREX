@@ -8,19 +8,19 @@ export test_output_folder=test_outputs
 # $test_output_folder/ner_predictions.jsonl \
 # $cuda_device
 
-echo "Predicting Salient Mentions"
-python scirex/predictors/predict_salient_mentions.py \
-$scirex_archive \
-$test_output_folder/ner_predictions.jsonl \
-$test_output_folder/salient_mentions_predictions.jsonl \
-$cuda_device
-
-# echo "Predicting Coreference between mentions"
-# python scirex/predictors/predict_pairwise_coreference.py \
-# $scirex_coreference_archive \
+# echo "Predicting Salient Mentions"
+# python scirex/predictors/predict_salient_mentions.py \
+# $scirex_archive \
 # $test_output_folder/ner_predictions.jsonl \
-# $test_output_folder/coreference_predictions.jsonl \
+# $test_output_folder/salient_mentions_predictions.jsonl \
 # $cuda_device
+
+echo "Predicting Coreference between mentions"
+python scirex/predictors/predict_pairwise_coreference.py \
+$scirex_coreference_archive \
+$test_output_folder/ner_predictions.jsonl \
+$test_output_folder/coreference_predictions.jsonl \
+$cuda_device
 
 # echo "Predicting clusters"
 # python scirex/predictors/predict_clusters.py \
