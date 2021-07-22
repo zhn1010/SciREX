@@ -54,22 +54,22 @@ def predict(archive_folder, test_file, output_file, cuda_device):
         for batch in tqdm(iterator):
             batch = nn_util.move_to_device(batch, cuda_device)  # Put on GPU.
             output_res = model.decode_saliency(batch, saliency_threshold)
-            print('output_res', output_res)
-            metadata = output_res['metadata']
-            doc_ids: List[str] = [m["doc_id"] for m in metadata]
-            assert len(set(doc_ids)) == 1
+            if('metadata' in output_res): 
+                metadata = output_res['metadata']
+                doc_ids: List[str] = [m["doc_id"] for m in metadata]
+                assert len(set(doc_ids)) == 1
 
-            decoded_spans: List[Dict[tuple, float]] = output_res['decoded_spans']
-            doc_id = metadata[0]['doc_id']
+                decoded_spans: List[Dict[tuple, float]] = output_res['decoded_spans']
+                doc_id = metadata[0]['doc_id']
 
-            if doc_id not in documents :
-                documents[doc_id] = {}
-                documents[doc_id]['saliency'] = []
-                documents[doc_id]['doc_id'] = doc_id
+                if doc_id not in documents :
+                    documents[doc_id] = {}
+                    documents[doc_id]['saliency'] = []
+                    documents[doc_id]['doc_id'] = doc_id
 
-            for pspans in decoded_spans :
-                for span, prob in pspans.items() :
-                    documents[doc_id]['saliency'].append([span[0], span[1], 1 if prob > saliency_threshold else 0, prob])
+                for pspans in decoded_spans :
+                    for span, prob in pspans.items() :
+                        documents[doc_id]['saliency'].append([span[0], span[1], 1 if prob > saliency_threshold else 0, prob])
 
         f.write("\n".join([json.dumps(x) for x in documents.values()]))
 
