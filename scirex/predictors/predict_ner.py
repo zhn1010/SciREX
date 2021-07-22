@@ -2,7 +2,7 @@
 
 import json
 import os
-from sys import argv
+from sys import argv, path
 from typing import Dict, List, Tuple
 
 from tqdm import tqdm
@@ -12,6 +12,12 @@ from allennlp.data import DataIterator, DatasetReader
 from allennlp.data.dataset import Batch
 from allennlp.models.archival import load_archive
 from allennlp.nn import util as nn_util
+
+
+print("______________________________________")
+for Path in path:
+    print(Path)
+print("______________________________________")
 
 from scirex_utilities.json_utilities import NumpyEncoder
 
