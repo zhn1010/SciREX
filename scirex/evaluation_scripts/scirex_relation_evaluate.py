@@ -109,6 +109,9 @@ def main(args):
                 gold_relations = [tuple((t, x[t]) for t in types) for x in doc['n_ary_relations']]
                 gold_relations = set([x for x in gold_relations if has_all_mentions(doc, x)])
 
+                print('relations', relations)
+                print('gold_relations', gold_relations)
+
                 matched = relations & gold_relations
 
                 metrics = {
