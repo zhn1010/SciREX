@@ -22,17 +22,17 @@ export test_output_folder=test_outputs
 # $test_output_folder/coreference_predictions.jsonl \
 # $cuda_device
 
-echo "Predicting clusters"
-python scirex/predictors/predict_clusters.py \
-$test_output_folder/coreference_predictions.jsonl \
-$test_output_folder/cluster_predictions.jsonl \
-0.95
-
-# echo "Predicting Salient Clustering "
-# python scirex/predictors/predict_salient_clusters.py \
+# echo "Predicting clusters"
+# python scirex/predictors/predict_clusters.py \
+# $test_output_folder/coreference_predictions.jsonl \
 # $test_output_folder/cluster_predictions.jsonl \
-# $test_output_folder/salient_mentions_predictions.jsonl \
-# $test_output_folder/salient_clusters_predictions.jsonl
+# 0.95
+
+echo "Predicting Salient Clustering "
+python scirex/predictors/predict_salient_clusters.py \
+$test_output_folder/cluster_predictions.jsonl \
+$test_output_folder/salient_mentions_predictions.jsonl \
+$test_output_folder/salient_clusters_predictions.jsonl
 
 # echo "Predicitng Salient Clusters using gold clusters as filter"
 # python scirex/predictors/predict_salient_clusters_using_gold.py \
