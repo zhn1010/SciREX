@@ -13,11 +13,19 @@ from allennlp.data.dataset import Batch
 from allennlp.models.archival import load_archive
 from allennlp.nn import util as nn_util
 
+#os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))))
+print(os.path.realpath(__file__))
+print(os.path.dirname(os.path.realpath(__file__)))
+print(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
+print(os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))))
+
 
 print("______________________________________")
 for Path in path:
     print(Path)
 print("______________________________________")
+
+
 
 from scirex_utilities.json_utilities import NumpyEncoder
 
