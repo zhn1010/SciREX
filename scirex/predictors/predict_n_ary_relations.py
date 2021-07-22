@@ -75,23 +75,23 @@ def predict(archive_folder, span_file, cluster_file, output_file, cuda_device):
             with torch.no_grad() :
                 batch = nn_util.move_to_device(batch, cuda_device)
                 output_res = model.decode_relations(batch)
-
+            print('output_res', output_res)
             n_ary_relations = output_res['n_ary_relation']
             predicted_relations, scores = n_ary_relations['candidates'], n_ary_relations['scores']
-            if(output_res['n_ary_relation']['metadata'] != ''):
-                metadata = output_res['n_ary_relation']['metadata'][0]
-                doc_id = metadata['doc_id']
-                coref_key_map = {k:i for i, k in metadata['document_metadata']['cluster_name_to_id'].items()}
-            
-                for i, rel in enumerate(predicted_relations) :
-                    predicted_relations[i] = tuple([coref_key_map[k] if k in coref_key_map else None for k in rel])
+            # if(output_res['n_ary_relation']['metadata'] != ''):
+            metadata = output_res['n_ary_relation']['metadata'][0]
+            doc_id = metadata['doc_id']
+            coref_key_map = {k:i for i, k in metadata['document_metadata']['cluster_name_to_id'].items()}
+        
+            for i, rel in enumerate(predicted_relations) :
+                predicted_relations[i] = tuple([coref_key_map[k] if k in coref_key_map else None for k in rel])
 
-                if doc_id not in documents :
-                    documents[doc_id] = {'predicted_relations' : [], 'doc_id' : doc_id}
+            if doc_id not in documents :
+                documents[doc_id] = {'predicted_relations' : [], 'doc_id' : doc_id}
 
-                label = [1 if x > relation_threshold else 0 for x in list(scores.ravel())]
-                scores = [round(float(x), 4) for x in list(scores.ravel())]
-                documents[doc_id]['predicted_relations'] += list(zip(predicted_relations, scores, label))
+            label = [1 if x > relation_threshold else 0 for x in list(scores.ravel())]
+            scores = [round(float(x), 4) for x in list(scores.ravel())]
+            documents[doc_id]['predicted_relations'] += list(zip(predicted_relations, scores, label))
 
         for d in documents.values() :
             predicted_relations = {}
