@@ -1,5 +1,6 @@
 from typing import Dict, List, Tuple
 from scirex_utilities.entity_utils import used_entities
+import json
 
 def span_match(span_1, span_2):
     sa, ea = span_1
@@ -58,8 +59,12 @@ def map_and_intersect_predicted_clusters_to_gold(
 
     predicted_clusters_string = {key: set([' '.join(words[span[0]:span[1]]) for span in value]) for (key, value) in predicted_clusters.items()}
     gold_clusters_string = {key: set([' '.join(words[span[0]:span[1]]) for span in value]) for (key, value) in gold_clusters.items()}
-    print('predicted_clusters', predicted_clusters_string)
-    print('gold_clusters', gold_clusters_string)
+
+    with open('cluster_output.jsonl', 'a') as outputFile:
+        json.dump({"predicted": predicted_clusters_string, "gold": gold_clusters_string})
+        outputFile.write('\n')
+    # print('predicted_clusters', predicted_clusters_string)
+    # print('gold_clusters', gold_clusters_string)
 
     intersection_scores = intersect_predicted_clusters_to_gold(predicted_clusters, gold_clusters)
 
