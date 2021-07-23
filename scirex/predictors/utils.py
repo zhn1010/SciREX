@@ -56,9 +56,9 @@ def map_and_intersect_predicted_clusters_to_gold(
     predicted_clusters = {k:[predicted_to_gold_map[tuple(x)] for x in v] for k, v in predicted_clusters.items()}
     gold_clusters = {k:[tuple(x) for x in v] for k, v in gold_clusters.items()}
 
-    predicted_clusters_string = {key: [span for span in value] for (key, value) in predicted_clusters}
+    # predicted_clusters_string = {key: [span for span in value] for (key, value) in predicted_clusters}
 
-    print('predicted_clusters', predicted_clusters_string)
+    print('predicted_clusters', predicted_clusters)
     print('gold_clusters', gold_clusters)
     print('words', words)
 
