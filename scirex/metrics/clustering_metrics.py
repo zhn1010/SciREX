@@ -7,9 +7,10 @@ def match_predicted_clusters_to_gold(
     predicted_clusters: Dict[str, List[Tuple[int, int]]],
     gold_clusters: Dict[str, List[Tuple[int, int]]],
     span_map,
-    words
+    words, 
+    n_ary_relations
 ):
-    intersection_scores = map_and_intersect_predicted_clusters_to_gold(predicted_clusters, gold_clusters, span_map, words)
+    intersection_scores = map_and_intersect_predicted_clusters_to_gold(predicted_clusters, gold_clusters, span_map, words, n_ary_relations)
     matched_clusters = {}
     
     for p in intersection_scores :
