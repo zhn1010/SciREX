@@ -50,6 +50,7 @@ def map_and_intersect_predicted_clusters_to_gold(
     predicted_clusters: Dict[str, List[Tuple[int, int]]],
     gold_clusters: Dict[str, List[Tuple[int, int]]],
     predicted_to_gold_map,
+    words,
 ):
 
     predicted_clusters = {k:[predicted_to_gold_map[tuple(x)] for x in v] for k, v in predicted_clusters.items()}
@@ -57,7 +58,7 @@ def map_and_intersect_predicted_clusters_to_gold(
 
     print('predicted_clusters', predicted_clusters)
     print('gold_clusters', gold_clusters)
-    print('predicted_to_gold_map', predicted_to_gold_map)
+    print('words', words)
 
     intersection_scores = intersect_predicted_clusters_to_gold(predicted_clusters, gold_clusters)
 

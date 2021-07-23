@@ -9,7 +9,7 @@ def match_predicted_clusters_to_gold(
     span_map,
     words
 ):
-    intersection_scores = map_and_intersect_predicted_clusters_to_gold(predicted_clusters, gold_clusters, span_map)
+    intersection_scores = map_and_intersect_predicted_clusters_to_gold(predicted_clusters, gold_clusters, span_map, words)
     matched_clusters = {}
     
     for p in intersection_scores :
