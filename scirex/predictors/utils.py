@@ -52,10 +52,10 @@ def map_and_intersect_predicted_clusters_to_gold(
     predicted_to_gold_map,
 ):
 
-    print('predicted_clusters', predicted_clusters)
     predicted_clusters = {k:[predicted_to_gold_map[tuple(x)] for x in v] for k, v in predicted_clusters.items()}
     gold_clusters = {k:[tuple(x) for x in v] for k, v in gold_clusters.items()}
 
+    print('predicted_clusters', predicted_clusters)
     print('gold_clusters', gold_clusters)
 
     intersection_scores = intersect_predicted_clusters_to_gold(predicted_clusters, gold_clusters)
