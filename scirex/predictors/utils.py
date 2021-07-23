@@ -52,6 +52,7 @@ def map_and_intersect_predicted_clusters_to_gold(
     gold_clusters: Dict[str, List[Tuple[int, int]]],
     predicted_to_gold_map,
     words,
+    n_ary_relations,
 ):
 
     predicted_clusters = {k:[predicted_to_gold_map[tuple(x)] for x in v] for k, v in predicted_clusters.items()}
