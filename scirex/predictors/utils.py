@@ -58,7 +58,6 @@ def map_and_intersect_predicted_clusters_to_gold(
     # print('new document')
     def getNerTypeFromBound(span): 
         found = [x for x in ner if x[0] == span[0] and x[1] == span[1]]
-        print('found', found)
         return found[0][2]
     
     predicted_tags_and_refs={"Material": defaultdict(list), "Method": defaultdict(list), "Metric": defaultdict(list), "Task": defaultdict(list)}
@@ -70,17 +69,18 @@ def map_and_intersect_predicted_clusters_to_gold(
     predicted_clusters_string = {key: list(set([' '.join(words[span[0]:span[1]]) for span in value])) for (key, value) in predicted_clusters.items()}
     # gold_clusters_string = {key: list(set([' '.join(words[span[0]:span[1]]) for span in value])) for (key, value) in gold_clusters.items()}
 
-    # for (key, value) in predicted_clusters.items():
-    #     predicted_tags_and_refs[getNerTypeFromBound(value[0])][key] = list(set([' '.join(words[bound[0]: bound[1]]) for bound in value]))
+    for (key, value) in predicted_clusters.items():
+        if(len(value) != 0):
+            predicted_tags_and_refs[getNerTypeFromBound(value[0])][key] = list(set([' '.join(words[bound[0]: bound[1]]) for bound in value]))
+
     for (key, value) in gold_clusters.items():
         if(len(value) != 0):
             str = list(set([' '.join(words[bound[0]: bound[1]]) for bound in value]))
-            # print('value', value)
             entity_type = getNerTypeFromBound(value[0])
             gold_tags_and_refs[entity_type][key] = str
 
     with open('cluster_output.jsonl', 'a') as outputFile:
-        json.dump({"predicted": predicted_clusters_string, "gold": gold_tags_and_refs}, outputFile)
+        json.dump({"predicted": predicted_tags_and_refs, "gold": gold_tags_and_refs}, outputFile)
         outputFile.write('\n')
     # print('predicted_clusters', predicted_clusters_string)
     # print('gold_clusters', gold_clusters_string)
