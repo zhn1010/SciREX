@@ -72,19 +72,23 @@ def map_and_intersect_predicted_clusters_to_gold(
 
     for (key, value) in predicted_clusters.items():
         if(len(value) != 0):
-            str = list(set([' '.join(words[bound[0]: bound[1]]) for bound in value]))
+            str = list(set([' '.join(words[bound[0]: bound[1]]).lower() for bound in value]))
             entity_type = types[key]
             predicted_tags_and_refs[entity_type][key] = str
-            # predicted_tags_and_refs[getNerTypeFromBound(value[0])][key] = list(set([' '.join(words[bound[0]: bound[1]]) for bound in value]))
 
     for (key, value) in gold_clusters.items():
         if(len(value) != 0):
-            str = list(set([' '.join(words[bound[0]: bound[1]]) for bound in value]))
+            str = list(set([' '.join(words[bound[0]: bound[1]]).lower() for bound in value]))
             entity_type = getNerTypeFromBound(value[0])
             gold_tags_and_refs[entity_type][key] = str
 
     with open('cluster_output.jsonl', 'a') as outputFile:
-        json.dump({"predicted": predicted_tags_and_refs, "gold": gold_tags_and_refs}, outputFile)
+        json.dump({
+      "Task": {'Gold': gold_tags_and_refs.get('Task', []), 'Predicted': predicted_tags_and_refs.get('Task', []) },
+      "Method": {'Gold': gold_tags_and_refs.get('Method', []), 'Predicted': predicted_tags_and_refs.get('Method', []) },
+      "Dataset": {'Gold': gold_tags_and_refs.get('Material', []) , 'Predicted': predicted_tags_and_refs.get('Material', []) },
+      "Metric": {'Gold': gold_tags_and_refs.get('Metric', []), 'Predicted': predicted_tags_and_refs.get('Metric', []) }
+      }, outputFile)
         outputFile.write('\n')
     # print('predicted_clusters', predicted_clusters_string)
     # print('gold_clusters', gold_clusters_string)
