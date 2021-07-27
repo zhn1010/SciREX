@@ -65,7 +65,9 @@ def map_and_intersect_predicted_clusters_to_gold(
     gold_tags_and_refs={"Material": defaultdict(list), "Method": defaultdict(list), "Metric": defaultdict(list), "Task": defaultdict(list)}
 
     predicted_clusters = {k:[predicted_to_gold_map[tuple(x)] for x in v] for k, v in predicted_clusters.items()}
+    print('before:', gold_clusters)
     gold_clusters = {k:[tuple(x) for x in v] for k, v in gold_clusters.items()}
+    print('after:', gold_clusters)
 
     predicted_clusters_string = {key: list(set([' '.join(words[span[0]:span[1]]) for span in value])) for (key, value) in predicted_clusters.items()}
     # gold_clusters_string = {key: list(set([' '.join(words[span[0]:span[1]]) for span in value])) for (key, value) in gold_clusters.items()}
