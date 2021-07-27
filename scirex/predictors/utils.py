@@ -1,5 +1,6 @@
 from typing import Dict, List, Tuple
 from scirex_utilities.entity_utils import used_entities
+from collections import defaultdict
 import json
 
 def span_match(span_1, span_2):
@@ -52,17 +53,30 @@ def map_and_intersect_predicted_clusters_to_gold(
     gold_clusters: Dict[str, List[Tuple[int, int]]],
     predicted_to_gold_map,
     words,
-    n_ary_relations,
+    ner,
 ):
+
+    def getNerTypeFromBound(span): 
+        ind = filter(lambda x: x[0] == span[0] and x[1] == span[1], ner)
+        found = [x for x in ner if x[0] == span[0] and x[1] == span[1]]
+        return found[0][2]
+    
+    predicted_tags_and_refs={"Material": defaultdict(list), "Method": defaultdict(list), "Metric": defaultdict(list), "Task": defaultdict(list)}
+    gold_tags_and_refs={"Material": defaultdict(list), "Method": defaultdict(list), "Metric": defaultdict(list), "Task": defaultdict(list)}
 
     predicted_clusters = {k:[predicted_to_gold_map[tuple(x)] for x in v] for k, v in predicted_clusters.items()}
     gold_clusters = {k:[tuple(x) for x in v] for k, v in gold_clusters.items()}
 
-    predicted_clusters_string = {key: list(set([' '.join(words[span[0]:span[1]]) for span in value])) for (key, value) in predicted_clusters.items()}
-    gold_clusters_string = {key: list(set([' '.join(words[span[0]:span[1]]) for span in value])) for (key, value) in gold_clusters.items()}
+    # predicted_clusters_string = {key: list(set([' '.join(words[span[0]:span[1]]) for span in value])) for (key, value) in predicted_clusters.items()}
+    # gold_clusters_string = {key: list(set([' '.join(words[span[0]:span[1]]) for span in value])) for (key, value) in gold_clusters.items()}
+
+    for (key, value) in predicted_clusters.items():
+        predicted_tags_and_refs[getNerTypeFromBound(value[0])][key] = list(set([' '.join(words[bound[0]: bound[1]]) for bound in value]))
+    for (key, value) in gold_clusters.items():
+        gold_tags_and_refs[getNerTypeFromBound(value[0])][key] = list(set([' '.join(words[bound[0]: bound[1]]) for bound in value]))
 
     with open('cluster_output.jsonl', 'a') as outputFile:
-        json.dump({"predicted": predicted_clusters_string, "gold": gold_clusters_string}, outputFile)
+        json.dump({"predicted": predicted_tags_and_refs, "gold": gold_tags_and_refs}, outputFile)
         outputFile.write('\n')
     # print('predicted_clusters', predicted_clusters_string)
     # print('gold_clusters', gold_clusters_string)
