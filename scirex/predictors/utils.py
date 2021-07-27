@@ -55,7 +55,7 @@ def map_and_intersect_predicted_clusters_to_gold(
     words,
     ner,
 ):
-    print('new document')
+    # print('new document')
     def getNerTypeFromBound(span): 
         found = [x for x in ner if x[0] == span[0] and x[1] == span[1]]
         print('found', found)
@@ -75,7 +75,7 @@ def map_and_intersect_predicted_clusters_to_gold(
     for (key, value) in gold_clusters.items():
         if(len(value) == 0):
             str = list(set([' '.join(words[bound[0]: bound[1]]) for bound in value]))
-            print('value', value)
+            # print('value', value)
             entity_type = getNerTypeFromBound(value[0])
             gold_tags_and_refs[entity_type][key] = str
 
