@@ -53,13 +53,12 @@ def map_and_intersect_predicted_clusters_to_gold(
     gold_clusters: Dict[str, List[Tuple[int, int]]],
     predicted_to_gold_map,
     words,
+    types,
     ner,
 ):
     # print('new document')
     def getNerTypeFromBound(span): 
         found = [x for x in ner if x[0] == span[0] and x[1] == span[1]]
-        if len(found) == 0:
-            return "Unknown"
         return found[0][2]
     
     predicted_tags_and_refs={"Material": defaultdict(list), "Method": defaultdict(list), "Metric": defaultdict(list), "Task": defaultdict(list), "Unknown": defaultdict(list)}
@@ -68,13 +67,13 @@ def map_and_intersect_predicted_clusters_to_gold(
     predicted_clusters = {k:[predicted_to_gold_map[tuple(x)] for x in v] for k, v in predicted_clusters.items()}
     gold_clusters = {k:[tuple(x) for x in v] for k, v in gold_clusters.items()}
 
-    predicted_clusters_string = {key: list(set([' '.join(words[span[0]:span[1]]) for span in value])) for (key, value) in predicted_clusters.items()}
+    # predicted_clusters_string = {key: list(set([' '.join(words[span[0]:span[1]]) for span in value])) for (key, value) in predicted_clusters.items()}
     # gold_clusters_string = {key: list(set([' '.join(words[span[0]:span[1]]) for span in value])) for (key, value) in gold_clusters.items()}
 
     for (key, value) in predicted_clusters.items():
         if(len(value) != 0):
             str = list(set([' '.join(words[bound[0]: bound[1]]) for bound in value]))
-            entity_type = getNerTypeFromBound(value[0])
+            entity_type = types[key]
             predicted_tags_and_refs[entity_type][key] = str
             # predicted_tags_and_refs[getNerTypeFromBound(value[0])][key] = list(set([' '.join(words[bound[0]: bound[1]]) for bound in value]))
 
