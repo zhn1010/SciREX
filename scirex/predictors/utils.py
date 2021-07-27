@@ -55,7 +55,7 @@ def map_and_intersect_predicted_clusters_to_gold(
     words,
     ner,
 ):
-
+    print('new document')
     def getNerTypeFromBound(span): 
         found = [x for x in ner if x[0] == span[0] and x[1] == span[1]]
         print('found', found)
