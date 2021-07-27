@@ -41,9 +41,9 @@ def clustering_metrics(gold_data, predicted_clusters, span_map):
     mappings = {}
     for doc in gold_data:
         predicted_doc = predicted_clusters[doc["doc_id"]]
-        print('predicted_doc', predicted_doc)
+        # print('predicted_doc', predicted_doc)
         metrics, mapping = match_predicted_clusters_to_gold(
-            predicted_doc["clusters"], doc["coref"], span_map[doc["doc_id"]], doc['words'], doc['n_ary_relations']
+            predicted_doc["clusters"], doc["coref"], span_map[doc["doc_id"]], doc['words'], doc['ner']
         )
         mappings[doc["doc_id"]] = mapping
         all_metrics.append(metrics)
