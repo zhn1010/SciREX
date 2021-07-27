@@ -73,7 +73,8 @@ def map_and_intersect_predicted_clusters_to_gold(
     # for (key, value) in predicted_clusters.items():
     #     predicted_tags_and_refs[getNerTypeFromBound(value[0])][key] = list(set([' '.join(words[bound[0]: bound[1]]) for bound in value]))
     for (key, value) in gold_clusters.items():
-        gold_tags_and_refs[getNerTypeFromBound(value[0])][key] = list(set([' '.join(words[bound[0]: bound[1]]) for bound in value]))
+        str = list(set([' '.join(words[bound[0]: bound[1]]) for bound in value]))
+        gold_tags_and_refs[getNerTypeFromBound(value[0])][key] = str
 
     with open('cluster_output.jsonl', 'a') as outputFile:
         json.dump({"predicted": predicted_clusters_string, "gold": gold_tags_and_refs}, outputFile)
