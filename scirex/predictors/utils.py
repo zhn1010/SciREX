@@ -58,9 +58,11 @@ def map_and_intersect_predicted_clusters_to_gold(
     # print('new document')
     def getNerTypeFromBound(span): 
         found = [x for x in ner if x[0] == span[0] and x[1] == span[1]]
+        if len(found == 0):
+            return "Unknown"
         return found[0][2]
     
-    predicted_tags_and_refs={"Material": defaultdict(list), "Method": defaultdict(list), "Metric": defaultdict(list), "Task": defaultdict(list)}
+    predicted_tags_and_refs={"Material": defaultdict(list), "Method": defaultdict(list), "Metric": defaultdict(list), "Task": defaultdict(list), "Unknown": defaultdict(list)}
     gold_tags_and_refs={"Material": defaultdict(list), "Method": defaultdict(list), "Metric": defaultdict(list), "Task": defaultdict(list)}
 
     predicted_clusters = {k:[predicted_to_gold_map[tuple(x)] for x in v] for k, v in predicted_clusters.items()}
