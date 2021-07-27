@@ -73,7 +73,7 @@ def map_and_intersect_predicted_clusters_to_gold(
     # for (key, value) in predicted_clusters.items():
     #     predicted_tags_and_refs[getNerTypeFromBound(value[0])][key] = list(set([' '.join(words[bound[0]: bound[1]]) for bound in value]))
     for (key, value) in gold_clusters.items():
-        if(len(value) == 0):
+        if(len(value) != 0):
             str = list(set([' '.join(words[bound[0]: bound[1]]) for bound in value]))
             # print('value', value)
             entity_type = getNerTypeFromBound(value[0])
