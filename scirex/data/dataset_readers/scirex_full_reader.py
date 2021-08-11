@@ -108,7 +108,7 @@ def verify_json_dict(json_dict):
     entities: Dict[Span, str] = json_dict["ner"]
     corefs: Dict[str, List[Span]] = json_dict["coref"]
 
-    print('_____________len(sections)_____________', len(sections))
+    print('_____________doc_id_____________', json_dict["doc_id"])
 
     assert all(sum(is_x_in_y(e, s) for s in sections) == 1 for e in entities), breakpoint()
     assert all(sum(is_x_in_y(e, ss) for s in sentences for ss in s) == 1 for e in entities), breakpoint()
