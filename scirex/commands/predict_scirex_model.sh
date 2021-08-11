@@ -1,12 +1,12 @@
 export test_file=scirex_dataset/release_data/test.jsonl
 export test_output_folder=test_outputs
 
-# echo "Predicting NER"
-# python scirex/predictors/predict_ner.py \
-# $scirex_archive \
-# $test_file \
-# $test_output_folder/ner_predictions.jsonl \
-# $cuda_device
+echo "Predicting NER"
+python scirex/predictors/predict_ner.py \
+$scirex_archive \
+$test_file \
+$test_output_folder/ner_predictions.jsonl \
+$cuda_device
 
 # echo "Predicting Salient Mentions"
 # python scirex/predictors/predict_salient_mentions.py \
@@ -64,12 +64,12 @@ export test_output_folder=test_outputs
 # $test_output_folder/relations_predictions_gold_clusters.jsonl \
 # $cuda_device
 
-echo "Evaluating on all Predicted steps "
-python scirex/evaluation_scripts/scirex_relation_evaluate.py \
---gold-file $test_file \
---ner-file $test_output_folder/ner_predictions.jsonl \
---clusters-file $test_output_folder/salient_clusters_predictions.jsonl \
---relations-file $test_output_folder/relations_predictions.jsonl
+# echo "Evaluating on all Predicted steps "
+# python scirex/evaluation_scripts/scirex_relation_evaluate.py \
+# --gold-file $test_file \
+# --ner-file $test_output_folder/ner_predictions.jsonl \
+# --clusters-file $test_output_folder/salient_clusters_predictions.jsonl \
+# --relations-file $test_output_folder/relations_predictions.jsonl
 
 
 # echo "Evaluating on all predicted steps with filtering using gold salient clusters"
