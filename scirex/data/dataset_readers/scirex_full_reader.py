@@ -113,11 +113,15 @@ def verify_json_dict(json_dict):
     assert all(sum(is_x_in_y(e, s) for s in sections) == 1 for e in entities), breakpoint()
     assert all(sum(is_x_in_y(e, ss) for s in sentences for ss in s) == 1 for e in entities), breakpoint()
     for i in range(len(sections)):
-        print('i', i )
-        print('sections[i][0]', sections[i][0] )
-        print('sentences[i][0][0]', sentences[i][0][0] )
-        print('sections[i][-1]', sections[i][-1] )
-        print('sentences[i][-1][-1]', sentences[i][-1][-1] )
+        if(json_dict["doc_id"] == 55 and i == 1):
+            print('i', i )
+            print('sections[i]', sections[i] )
+            print('sentences[i]', sentences[i] )
+            print('sections[i][0]', sections[i][0] )
+            print('sentences[i][0][0]', sentences[i][0][0] )
+            print('sections[i][-1]', sections[i][-1] )
+            print('sentences[i][-1][-1]', sentences[i][-1][-1] )
+
         assert(
             (sections[i][0] == sentences[i][0][0] and sections[i][-1] == sentences[i][-1][-1])    
         ), breakpoint()
