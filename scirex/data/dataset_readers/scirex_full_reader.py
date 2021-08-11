@@ -112,10 +112,11 @@ def verify_json_dict(json_dict):
 
     assert all(sum(is_x_in_y(e, s) for s in sections) == 1 for e in entities), breakpoint()
     assert all(sum(is_x_in_y(e, ss) for s in sentences for ss in s) == 1 for e in entities), breakpoint()
-    assert all(
-        (sections[i][0] == sentences[i][0][0] and sections[i][-1] == sentences[i][-1][-1])
-        for i in range(len(sections))
-    ), breakpoint()
+    for i in range(len(sections)):
+        print('i', i )
+        assert(
+            (sections[i][0] == sentences[i][0][0] and sections[i][-1] == sentences[i][-1][-1])    
+        ), breakpoint()
 
     assert all(x in entities for k, v in corefs.items() for x in v), breakpoint()
 
