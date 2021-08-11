@@ -108,6 +108,8 @@ def verify_json_dict(json_dict):
     entities: Dict[Span, str] = json_dict["ner"]
     corefs: Dict[str, List[Span]] = json_dict["coref"]
 
+    if(json_dict["doc_id"] == 55):
+        json.dump(json_dict, open('jsonDump.json', 'w'), indent=3)
     print('_____________doc_id_____________', json_dict["doc_id"])
 
     assert all(sum(is_x_in_y(e, s) for s in sections) == 1 for e in entities), breakpoint()
