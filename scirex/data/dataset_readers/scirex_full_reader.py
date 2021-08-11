@@ -99,6 +99,7 @@ def clean_json_dict(json_dict):
         json_dict["sentences"], json_dict["sections"]
     )
 
+    json_dict["sentences"] = [s for s in json_dict['sentences'] if len(s)>0]
     return json_dict
 
 
