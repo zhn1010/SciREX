@@ -95,11 +95,14 @@ def clean_json_dict(json_dict):
                 s for i, s in enumerate(json_dict["sentences"]) if i not in in_sentences[1:]
             ]
 
+    json_dict["sections"] = [s for s in json_dict['sections'] if s[1]-s[0]>2]
+    # json_dict["sentences"] = [s for s in json_dict['sentences'] if len(s)>0]
+
     json_dict["sentences"]: List[List[Span]] = group_sentences_to_sections(
         json_dict["sentences"], json_dict["sections"]
     )
 
-    json_dict["sentences"] = [s for s in json_dict['sentences'] if len(s)>0]
+    
     return json_dict
 
 
